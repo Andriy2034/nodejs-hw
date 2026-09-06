@@ -1,5 +1,5 @@
 
 
-const message = 'Hello world 1223';
+const message = 'Hello world very good';
 
 console.log(message);
