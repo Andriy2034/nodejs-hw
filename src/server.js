@@ -22,7 +22,7 @@ app.get ("/notes", (req, res) => {
   });
 });
 
-app.get("/notes:noteId", (req, res) => {
+app.get("/notes/:noteId", (req, res) => {
   const {noteId} = req.params;
 
   res.status(200).json({
