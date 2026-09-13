@@ -1,7 +1,7 @@
 import { Note } from '../models/note.js';
 import createError from 'http-errors';
 
-export const getOneNotes = async (req, res) => {
+export const getNoteById = async (req, res) => {
   const { noteId } = req.params;
   const note = await Note.findOne({ _id: noteId });
   if (!note) {
@@ -31,7 +31,7 @@ export const deleteNote = async (req, res) => {
 
 export const updateNote = async (req, res) => {
   const { noteId} = req.params;
-  const note = await Note.findOneAndUpdate({ _id: noteId}, req.body, { new: true });
+  const note = await Note.findOneAndUpdate({ _id: noteId}, req.body, { returnDocument: 'after'});
   if (!note) {
     throw createError(404, 'Note not found');
   }

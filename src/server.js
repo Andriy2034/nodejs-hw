@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import { connectMongoDB } from './db/connectMongoDB.js';
 import { errorHandler } from './middleware/errorHandler.js';
-import { NotFoundHandler } from './middleware/notFoundHandler.js';
+import { notFoundHandler } from './middleware/notFoundHandler.js';
 import notesRoutes from './routes/notesRoutes.js';
 import { logger } from './middleware/logger.js';
 
@@ -25,7 +25,7 @@ app.use(express.json());
 app.use(notesRoutes);
 
 
-app.use(NotFoundHandler);
+app.use(notFoundHandler);
 app.use(errorHandler);
 
 
