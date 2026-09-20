@@ -1,4 +1,4 @@
-export const Tags = [
+export const TAGS = [
   'Work',
   'Personal',
   'Meeting',
@@ -12,4 +12,4 @@ export const Tags = [
 ];
 
 
-export default Tags;
+export default TAGS;

@@ -11,7 +11,7 @@ export const getNoteById = async (req, res) => {
 };
 
 export const getAllNotes = async (req, res) => {
-  const { page = 1, perPage = 10, tag, search } = req.query;
+  const { page, perPage, tag, search } = req.query;
   const skip = (page - 1) * perPage;
   const limit = perPage;
 
