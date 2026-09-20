@@ -6,7 +6,7 @@ const objectIdValidator = (value, helpers) => {
   if (isValidObjectId(value)) {
     return value;
   }
-  return helpers.message('Error: Invalid ObjectId');
+  return helpers.message('Invalid noteId');
 };
 
 export const getAllNotesSchema = {
@@ -20,11 +20,10 @@ export const getAllNotesSchema = {
 
 export const createNoteSchema = {
   [Segments.BODY]: Joi.object({
-    title: Joi.string().min(2).max(20).required(),
-    content: Joi.string().min(3).max(200),
+    title: Joi.string().min(1).required(),
+    content: Joi.string().allow(''),
     tag: Joi.string()
-      .valid(...TAGS)
-      .default('Todo'),
+      .valid(...TAGS),
   }),
 };
 
@@ -37,7 +36,7 @@ export const noteIdSchema = {
 export const updateNoteSchema = {
   [Segments.BODY]: Joi.object({
     title: Joi.string().min(1),
-    content: Joi.string().min(3).default(''),
+    content: Joi.string().allow(''),
     tag: Joi.string()
       .valid(...TAGS),
   }).min(1),
