@@ -19,8 +19,13 @@ const noteSchema = new Schema({
     default: "Todo"
   },
 
-
-
 }, { timestamps: true });
+
+
+noteSchema.index ({
+  tag: 1,
+  title: 1,
+  content: 1
+});
 
 export const Note = model("Note", noteSchema);
