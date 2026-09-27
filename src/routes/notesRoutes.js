@@ -1,5 +1,5 @@
-import {Router} from "express";
-import { getNoteById, createNote, getAllNotes, deleteNote, updateNote} from '../controllers/notesController.js';
+import { Router } from "express";
+import { getNoteById, createNote, getAllNotes, deleteNote, updateNote } from '../controllers/notesController.js';
 import { createNoteSchema, noteIdSchema, updateNoteSchema, getAllNotesSchema } from '../validations/notesValidation.js';
 import { celebrate } from "celebrate";
 
