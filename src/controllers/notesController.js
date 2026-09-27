@@ -12,33 +12,40 @@ export const getNoteById = async (req, res) => {
 };
 
 export const getAllNotes = async (req, res) => {
-  const { page, perPage, tag, search } = req.query;
-  const skip = (page - 1) * perPage;
-  const limit = perPage;
+  const page = Math.max(1, Number(req.query.page) || 1);
+  const perPage = Math.max(1, Number(req.query.perPage) || 10);
+  const { tag, search } = req.query;
 
-  const notesQuery = Note.find({userId: req.user._id});
+  const skip = (page - 1) * perPage;
+
+  const notesQuery = Note.find({
+    userId: req.user._id,
+  });
 
   if (tag) {
-    notesQuery.where(`tag`).equals(tag);
+    notesQuery.where('tag').equals(tag);
   }
+
   if (search) {
-    notesQuery.or([
-      { title: { $regex: search, $options: 'i' } },
-      { content: { $regex: search, $options: 'i' } },
-    ]);
+    notesQuery.where({
+      $or: [
+        { title: { $regex: search, $options: 'i' } },
+        { content: { $regex: search, $options: 'i' } },
+      ],
+    });
   }
 
-  const [totalNotes, notes] = await Promise.all([
-    notesQuery.clone().countDocuments(),
-    notesQuery.skip(skip).limit(limit),
+  const [notes, totalItems] = await Promise.all([
+    notesQuery.clone().skip(skip).limit(perPage).exec(),
+    notesQuery.clone().countDocuments().exec(),
   ]);
-  const totalPages = Math.ceil(totalNotes / perPage);
 
+  const totalPages = Math.ceil(totalItems / perPage);
 
-  res.status(200).json({
+  return res.status(200).json({
     page,
     perPage,
-    totalNotes,
+    totalItems,
     totalPages,
     notes,
   });
@@ -69,9 +76,9 @@ export const updateNote = async (req, res) => {
   const { noteId } = req.params;
   const note = await Note.findOneAndUpdate({
     _id: noteId,
-     userId: req.body._id
+     userId: req.user._id
      },
-      req.user, {
+      req.body, {
     returnDocument: 'after',
   });
   if (!note) {
