@@ -13,13 +13,12 @@ export const createSession = async (userId) => {
     });
 };
 
-export const setSessionCookie = async (res, session) => {
+export const setSessionCookies = (res, session) => {
   res.cookie("accessToken", session.accessToken, {
     httpOnly: true,
     secure: true,
     sameSite: "none",
     maxAge: FIFTEEN_MINUTES,
-    expires: session.accessTokenValidUntil,
   });
 
   res.cookie("refreshToken", session.refreshToken, {
@@ -27,7 +26,6 @@ export const setSessionCookie = async (res, session) => {
     secure: true,
     sameSite: "none",
     maxAge: ONE_DAY,
-    expires: session.refreshTokenValidUntil,
   });
 
    res.cookie("sessionId", session._id.toString(), {
@@ -35,7 +33,6 @@ export const setSessionCookie = async (res, session) => {
     secure: true,
     sameSite: "none",
     maxAge: ONE_DAY,
-    expires: session.refreshTokenValidUntil,
   });
 
 };
