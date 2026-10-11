@@ -8,6 +8,7 @@ import notesRoutes from './routes/notesRoutes.js';
 import { logger } from './middleware/logger.js';
 import { errors } from "celebrate";
 import authRouter from "./routes/authRoutes.js";
+import userRouter from "./routes/userRoutes.js";
 import cookieParser from "cookie-parser";
 
 
@@ -27,6 +28,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use(authRouter);
+app.use(userRouter);
 app.use(notesRoutes);
 
 
